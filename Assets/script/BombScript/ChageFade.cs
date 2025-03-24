@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-public class BombFade : MonoBehaviour
+public class ChageFade : MonoBehaviour
 {
     [SerializeField] private float _fadeDuration = 3f;
 
@@ -11,7 +11,7 @@ public class BombFade : MonoBehaviour
     private Color _startColor;
     private Color _endColor;
 
-    public event Action<BombFade> FadeComplete;
+    public event Action<ChageFade> FadeComplete;
 
     private void Awake()
     {
@@ -26,12 +26,12 @@ public class BombFade : MonoBehaviour
         _renderer.material.color = _startColor;
     }
 
-    public void StartFade()
+    public void FadeStart()
     {
-        StartCoroutine(Fade());
+        StartCoroutine(FadeChange());
     }
 
-    private IEnumerator Fade()
+    private IEnumerator FadeChange()
     {
         float elapsedTime = 0f;
 
@@ -45,7 +45,7 @@ public class BombFade : MonoBehaviour
         FadeComplete?.Invoke(this);
     }
 
-    public void ResetColor()
+    public void ColorChange()
     {
         _renderer.material.color = _startColor;
     }

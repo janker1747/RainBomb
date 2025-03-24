@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BombPool : MonoBehaviour, IObjectPool<Bomb>
 {
     [SerializeField] private Bomb _prefab;
     [SerializeField] private float _poolSize = 10f;
+    private float _totalActive;
 
+    private List<Bomb> _allBombs = new List<Bomb>();
     private Queue<Bomb> _bombs = new Queue<Bomb>();
     private Color _defaultColor;
 
@@ -18,10 +21,11 @@ public class BombPool : MonoBehaviour, IObjectPool<Bomb>
             Bomb bomb = Instantiate(_prefab);
             bomb.gameObject.SetActive(false);
             _bombs.Enqueue(bomb);
+            _allBombs.Add(bomb);
         }
     }
 
-    public Bomb GetObject(Vector3 position , Quaternion rotation)
+    public Bomb GetObject(Vector3 position, Quaternion rotation)
     {
         Bomb bomb;
 
@@ -45,5 +49,10 @@ public class BombPool : MonoBehaviour, IObjectPool<Bomb>
     {
         bomb.gameObject.SetActive(false);
         _bombs.Enqueue(bomb);
+    }
+
+    public float CountActiveInCollection()
+    {
+        return _allBombs.Count(bomb => bomb != null && bomb.gameObject.activeSelf);
     }
 }

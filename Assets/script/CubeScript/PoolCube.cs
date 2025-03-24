@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class PoolCube : MonoBehaviour , IObjectPool<Cube>
+public class PoolCube : MonoBehaviour, IObjectPool<Cube>
 {
     [SerializeField] private Cube _prefab;
     [SerializeField] private float _poolSize = 10f;
     [SerializeField] private BombSpawner _bombSpawner;
+    private float _totalActive;
 
+    private List<Cube> _allCubes = new List<Cube>();
     private Queue<Cube> _pool = new Queue<Cube>();
 
     private void Awake()
@@ -18,8 +21,9 @@ public class PoolCube : MonoBehaviour , IObjectPool<Cube>
             Cube cube = Instantiate(_prefab);
             cube.gameObject.SetActive(false);
             _pool.Enqueue(cube);
+            _allCubes.Add(cube);
 
-            cube.Change += OnCubeChanged;
+            cube.Collided += OnCubeChanged;
         }
     }
 
@@ -66,7 +70,7 @@ public class PoolCube : MonoBehaviour , IObjectPool<Cube>
     public void ReturnObjectWithDelay(Cube cube, float delay)
     {
         StartCoroutine(ReturnToPoolAfterDelay(cube, delay));
-        cube.Change -= OnCubeChanged;
+        cube.Collided -= OnCubeChanged;
     }
 
     private IEnumerator ReturnToPoolAfterDelay(Cube cube, float delay)
@@ -80,6 +84,11 @@ public class PoolCube : MonoBehaviour , IObjectPool<Cube>
         cube.gameObject.SetActive(false);
         _pool.Enqueue(cube);
 
-        _bombSpawner.SpawnBomb(cube.transform.position , cube.transform.rotation);
+        _bombSpawner.SpawnBomb(cube.transform.position, cube.transform.rotation);
+    }
+
+    public float CountActiveInCollection()
+    {
+        return _allCubes.Count(cube => cube != null && cube.gameObject.activeSelf);
     }
 }

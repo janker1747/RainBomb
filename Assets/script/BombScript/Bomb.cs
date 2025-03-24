@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    private BombFade _bombFade;
+    private ChageFade _bombFade;
 
     public event Action<Bomb> BombReady; 
 
     private void Awake()
     {
-        _bombFade = GetComponent<BombFade>();
+        _bombFade = GetComponent<ChageFade>();
     }
 
     private void OnEnable()
@@ -25,10 +25,10 @@ public class Bomb : MonoBehaviour
     public void Activate()
     {
         _bombFade.SetStartColor(Color.black);
-        _bombFade.StartFade(); 
+        _bombFade.FadeStart(); 
     }
 
-    private void HandleFadeComplete(BombFade bombFade)
+    private void HandleFadeComplete(ChageFade bombFade)
     {
         BombReady?.Invoke(this); 
     }
