@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public interface IObjectPool<T> where T : MonoBehaviour
+public interface IObjectPool<PrefabParrent> where PrefabParrent : MonoBehaviour
 {
-    T GetObject(Vector3 position, Quaternion rotation);
-    void ReturnObject(T obj);
+    PrefabParrent GetObject(Vector3 position, Quaternion rotation);
+    void ReturnObject(PrefabParrent obj);
 }

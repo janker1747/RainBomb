@@ -10,6 +10,13 @@ public class BombAllTime : ObjectCounter<BombSpawner>
     {
         Initialize(_bombSpawner,
             spawner => spawner.GetCount,
-            "Всего бомб за всё время: {0}");
+            "Бомб за всё время: {0}");
+     
+            _bombSpawner.BombCountChanged += UpdateCount;
+    }
+
+    private void OnDestroy()
+    {
+            _bombSpawner.BombCountChanged -= UpdateCount;
     }
 }

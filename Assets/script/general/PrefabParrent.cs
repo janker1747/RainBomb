@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public class PrefabParrent : MonoBehaviour
-{
+public abstract class PrefabParent : MonoBehaviour
+{ 
 }

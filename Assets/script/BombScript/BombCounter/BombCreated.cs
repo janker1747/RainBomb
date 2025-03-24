@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BombCreated : ObjectCounter<BombSpawner>
@@ -10,6 +8,13 @@ public class BombCreated : ObjectCounter<BombSpawner>
     {
         Initialize(_bombSpawner,
             spawner => spawner.GetCount,
-            "Всего создано бомб: {0}");
+            "Бомб созданно: {0}");
+
+        _bombSpawner.BombCountChanged += UpdateCount;
+    }
+
+    private void OnDestroy()
+    {
+        _bombSpawner.BombCountChanged -= UpdateCount;
     }
 }

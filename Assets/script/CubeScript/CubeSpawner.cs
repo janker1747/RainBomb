@@ -1,12 +1,16 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader))]
 public class CubeSpawner : Spawner<Cube>
 {
+    [SerializeField] private CreatedCubesCounter _createdCubesCounter;
+    [SerializeField] private CubeAllTimeCounter _cubeAllTimeCounter;
     [SerializeField] private PoolCube _cubePool;
     private InputReader _inputReader;
     private float _count;
 
+    public event Action CubeCountChanged;
     public float GetCount => _count;
     
     private void Awake()
@@ -29,6 +33,7 @@ public class CubeSpawner : Spawner<Cube>
     {
         _count++;
         Spawn();
+        CubeCountChanged?.Invoke();
     }
 }
 

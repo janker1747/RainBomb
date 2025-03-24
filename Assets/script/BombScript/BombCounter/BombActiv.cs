@@ -9,7 +9,14 @@ public class BombActiv : ObjectCounter<BombPool>
     private void Awake()
     {
         Initialize(_bombPool,
-            bomb => bomb.CountActiveInCollection(),
-            "Активных бомб: {0}");
+            bomb => bomb.GetActiveObjectCount(),
+            "Количество активных бомб: {0}");
+
+            _bombPool.ActiveCountChanged += UpdateCount;
+    }
+
+    private void OnDestroy()
+    {
+            _bombPool.ActiveCountChanged -= UpdateCount;
     }
 }

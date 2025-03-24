@@ -14,12 +14,19 @@ public class ObjectCounter<T> : MonoBehaviour where T : MonoBehaviour
         _target = target;
         _countGetter = countGetter;
         if (customFormat != null) _displayFormat = customFormat;
+
+        UpdateText();
     }
 
-    private void Update()
+    public void UpdateCount()
     {
         if (_target == null || _counterText == null) return;
 
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
         float count = _countGetter(_target);
         _counterText.text = string.Format(_displayFormat, count);
     }

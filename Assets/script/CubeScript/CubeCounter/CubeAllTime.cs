@@ -9,5 +9,12 @@ public class CubeAllTimeCounter : ObjectCounter<CubeSpawner>
         Initialize(_cubeSpawner,
             spawner => spawner.GetCount,
             "Всего кубов за всё время: {0}");
+
+            _cubeSpawner.CubeCountChanged += UpdateCount; 
+    }
+
+    private void OnDestroy()
+    {
+            _cubeSpawner.CubeCountChanged -= UpdateCount; 
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine.Pool;
 
 public class Spawner<T> : MonoBehaviour  where T : MonoBehaviour
 {
-    [SerializeField] private IObjectPool<T> _pool;
     [SerializeField] private Transform _spawnPoint;
+    private IObjectPool<T> _pool;
 
     public void SetPool(IObjectPool<T> pool)
     {

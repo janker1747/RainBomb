@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bomb : PrefabParrent
+public class Bomb : PrefabParent
 {
     private FadeChanger _bombFade;
 

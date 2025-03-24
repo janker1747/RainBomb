@@ -5,9 +5,9 @@ public class PoolCube : ObjectPool<Cube>
 {
     [SerializeField] private BombSpawner _bombSpawner;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
 
         foreach (Cube cube in _allObjects)
         {
