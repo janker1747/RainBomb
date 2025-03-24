@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Cube : MonoBehaviour
+public class Cube : PrefabParrent
 {
    public event Action<Cube> Collided;
 

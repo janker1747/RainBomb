@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : PrefabParrent
 {
-    private ChageFade _bombFade;
+    private FadeChanger _bombFade;
 
     public event Action<Bomb> BombReady; 
 
     private void Awake()
     {
-        _bombFade = GetComponent<ChageFade>();
+        _bombFade = GetComponent<FadeChanger>();
     }
 
     private void OnEnable()
@@ -28,7 +28,7 @@ public class Bomb : MonoBehaviour
         _bombFade.FadeStart(); 
     }
 
-    private void HandleFadeComplete(ChageFade bombFade)
+    private void HandleFadeComplete(FadeChanger bombFade)
     {
         BombReady?.Invoke(this); 
     }
