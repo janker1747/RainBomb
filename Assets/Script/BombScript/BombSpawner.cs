@@ -1,28 +1,20 @@
-using System;
 using UnityEngine;
 
 public class BombSpawner : Spawner<Bomb>
 {
-    [SerializeField] private BombPool _pool;
     [SerializeField] private Exploder _exploder;
-    [SerializeField] private CounterView _counterView;
-    [SerializeField] private CounterView _counterView2;
 
-    private float _count;
+    private BombPool _pool;
 
     private void Awake()
     {
         _pool = GetComponent<BombPool>();
     }
 
-    public void SpawnBomb(Vector3 position, Quaternion ratation)
+    public void SpawnBomb(Vector3 position, Quaternion rotation)
     {
-        Bomb bomb = _pool.GetObject(position, ratation);
+        Bomb bomb = _pool.GetObject(position, rotation);
         bomb.BombReady += _exploder.HandleBombReady;
         bomb.Activate();
-        
-        _count++;
-        _counterView.CounterUpdate(_count);
-        _counterView2.CounterUpdate(_count);
     }
 }

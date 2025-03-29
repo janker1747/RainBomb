@@ -53,16 +53,12 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
         UpdateCounter();
     }
 
-    private float GetActiveObjectCount()
-    {
-        return _allObjects.Count(obj => obj.gameObject.activeSelf);
-    }
-
     private void UpdateCounter()
     {
-        if (_counterView != null)
-        {
-            _counterView.CounterUpdate(GetActiveObjectCount());
-        }
+        int total = _allObjects.Count;
+        int active = _allObjects.Count(obj => obj.gameObject.activeSelf);
+        int inactive = total - active;
+
+        _counterView.UpdateCounters(total, active, inactive);
     }
 }

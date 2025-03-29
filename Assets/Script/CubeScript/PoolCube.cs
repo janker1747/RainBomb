@@ -5,21 +5,21 @@ public class PoolCube : ObjectPool<Cube>
 {
     [SerializeField] private BombSpawner _bombSpawner;
 
-    protected override void OnAwake()
+    private void Awake()
     {
         base.OnAwake();
 
         foreach (Cube cube in _allObjects)
         {
-            cube.Collided += OnCubeChanged;
+            cube.Collided += OnCubeCollided;
         }
     }
 
-    private void OnCubeChanged(Cube cube)
+    private void OnCubeCollided(Cube cube)
     {
         float delay = Random.Range(2f, 6f);
         StartCoroutine(ReturnToPoolAfterDelay(cube, delay));
-        cube.Collided -= OnCubeChanged;
+        cube.Collided -= OnCubeCollided;
     }
 
     private IEnumerator ReturnToPoolAfterDelay(Cube cube, float delay)
@@ -32,5 +32,12 @@ public class PoolCube : ObjectPool<Cube>
     {
         base.ReturnObject(cube);
         _bombSpawner.SpawnBomb(cube.transform.position, cube.transform.rotation);
+    }
+
+    public override Cube GetObject(Vector3 position, Quaternion rotation)
+    {
+        Cube cube = base.GetObject(position, rotation);
+        cube.Collided += OnCubeCollided;
+        return cube;
     }
 }
