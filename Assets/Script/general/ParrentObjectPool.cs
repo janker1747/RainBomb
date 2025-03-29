@@ -1,14 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 
 public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : PrefabParent
 {
     [SerializeField] private T _prefab;
     [SerializeField] private int _poolSize = 10;
-    [SerializeField] private CounterView _counterView;
 
     protected List<T> _allObjects = new List<T>();
+    private int _totalSpawnedCount;
+
+    public event Action ObjectSpawned;
+    public event Action ObjectCreated;
+    public event Action ObjectReturned;
+
+    public int TotalSpawned => _totalSpawnedCount;
+    public int ActiveCount => _allObjects.Count(o => o.gameObject.activeSelf);
+    public int TotalCreated => _allObjects.Where(o => o != null).Count();
 
     private void Awake()
     {
@@ -22,6 +31,7 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
             T obj = Instantiate(_prefab);
             obj.gameObject.SetActive(false);
             _allObjects.Add(obj);
+            ObjectCreated?.Invoke(); 
         }
     }
 
@@ -35,13 +45,16 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
         {
             obj = Instantiate(_prefab);
             _allObjects.Add(obj);
+            ObjectCreated?.Invoke(); 
         }
 
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.gameObject.SetActive(true);
 
-        UpdateCounter();
+        _totalSpawnedCount++; 
+        ObjectSpawned?.Invoke(); 
+
         return obj;
     }
 
@@ -50,15 +63,6 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
         if (obj == null) return;
 
         obj.gameObject.SetActive(false);
-        UpdateCounter();
-    }
-
-    private void UpdateCounter()
-    {
-        int total = _allObjects.Count;
-        int active = _allObjects.Count(obj => obj.gameObject.activeSelf);
-        int inactive = total - active;
-
-        _counterView.UpdateCounters(total, active, inactive);
+        ObjectReturned?.Invoke(); 
     }
 }

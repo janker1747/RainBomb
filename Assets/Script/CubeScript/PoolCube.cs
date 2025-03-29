@@ -17,7 +17,10 @@ public class PoolCube : ObjectPool<Cube>
 
     private void OnCubeCollided(Cube cube)
     {
-        float delay = Random.Range(2f, 6f);
+        float minValue = 2f;
+        float maxValue = 6f;
+
+        float delay = Random.Range(minValue, maxValue);
         StartCoroutine(ReturnToPoolAfterDelay(cube, delay));
         cube.Collided -= OnCubeCollided;
     }
@@ -37,6 +40,7 @@ public class PoolCube : ObjectPool<Cube>
     public override Cube GetObject(Vector3 position, Quaternion rotation)
     {
         Cube cube = base.GetObject(position, rotation);
+        cube.Collided -= OnCubeCollided;
         cube.Collided += OnCubeCollided;
         return cube;
     }

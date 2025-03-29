@@ -5,7 +5,7 @@ using UnityEngine;
 public class Exploder : MonoBehaviour
 {
     private float _radius = 500f;
-    private float _force = 100f;
+    private float _force = 20f;
     private BombSpawner _spawner;
 
     private void Awake()

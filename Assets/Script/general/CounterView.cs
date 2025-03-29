@@ -1,24 +1,45 @@
 using TMPro;
 using UnityEngine;
 
-public class CounterView : MonoBehaviour
+public class CounterView<T> : MonoBehaviour where T : PrefabParent
 {
-    [Header("Text References")]
-    [SerializeField] private TMP_Text _totalCountText;
-    [SerializeField] private TMP_Text _activeCountText;
-    [SerializeField] private TMP_Text _inactiveCountText;
+    [Header("Настройки")]
+    [SerializeField] private ObjectPool<T> _pool;
+    [SerializeField] private string _objectName = "объектов";
 
-    [Header("Display Formats")]
-    [SerializeField] private string _totalFormat = "за всё время: {0}";
-    [SerializeField] private string _activeFormat = "Активны: {0}";
-    [SerializeField] private string _inactiveFormat = "В Пуле: {0}";
+    [Header("Текстовые поля")]
+    [SerializeField] private TMP_Text _totalSpawnedText;
+    [SerializeField] private TMP_Text _totalCreatedText;
+    [SerializeField] private TMP_Text _activeText;
 
-    public void UpdateCounters(int total, int active, int inactive)
+    [Header("Форматы")]
+    [SerializeField] private string _spawnedFormat = "Заспавнено {0}: {1}";
+    [SerializeField] private string _createdFormat = "Создано {0}: {1}";
+    [SerializeField] private string _activeFormat = "Активно {0}: {1}";
+
+    private void Awake()
     {
-        _totalCountText.text = string.Format(_totalFormat, total);
+        _pool.ObjectSpawned += UpdateCounters;
+        _pool.ObjectCreated += UpdateCounters;
+        _pool.ObjectReturned += UpdateCounters;
 
-        _activeCountText.text = string.Format(_activeFormat, active);
+        UpdateCounters(); 
+    }
 
-        _inactiveCountText.text = string.Format(_inactiveFormat, inactive);
+    private void UpdateCounters()
+    {
+        _totalSpawnedText.text = string.Format(_spawnedFormat, _objectName, _pool.TotalSpawned);
+        _totalCreatedText.text = string.Format(_createdFormat, _objectName, _pool.TotalCreated);
+        _activeText.text = string.Format(_activeFormat, _objectName, _pool.ActiveCount);
+    }
+
+    private void OnDestroy()
+    {
+        if (_pool != null)
+        {
+            _pool.ObjectSpawned -= UpdateCounters;
+            _pool.ObjectCreated -= UpdateCounters;
+            _pool.ObjectReturned -= UpdateCounters;
+        }
     }
 }
