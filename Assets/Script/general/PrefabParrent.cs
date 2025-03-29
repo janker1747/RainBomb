@@ -1,5 +1,5 @@
 using UnityEngine;
 
-public abstract class PrefabParent : MonoBehaviour
+public abstract class PoolableObject : MonoBehaviour
 { 
 }

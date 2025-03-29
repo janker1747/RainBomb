@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BombPool : ObjectPool<Bomb>
+public class BombPool : GlobalObjectPool<Bomb>
 {
     [SerializeField] private Color _defaultColor;
 

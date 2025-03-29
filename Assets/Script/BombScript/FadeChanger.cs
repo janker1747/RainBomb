@@ -44,9 +44,4 @@ public class FadeChanger : MonoBehaviour
 
         FadeComplete?.Invoke(this);
     }
-
-    public void ColorChange()
-    {
-        _renderer.material.color = _startColor;
-    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 public class CubeSpawner : Spawner<Cube>
 {
-    [SerializeField] private PoolCube _cubePool;
+    [SerializeField] private CubePool _cubePool;
 
     private InputReader _inputReader;
 

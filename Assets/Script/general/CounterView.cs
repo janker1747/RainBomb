@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public class CounterView<T> : MonoBehaviour where T : PrefabParent
+public class CounterView<T> : MonoBehaviour where T : PoolableObject
 {
     [Header("Настройки")]
-    [SerializeField] private ObjectPool<T> _pool;
+    [SerializeField] private GlobalObjectPool<T> _pool;
     [SerializeField] private string _objectName = "объектов";
 
     [Header("Текстовые поля")]
