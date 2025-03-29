@@ -468,6 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca020bf88a3a2414396217df5dec7db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452688}
   _counterText: {fileID: 220879155}
   _displayFormat: '{0}'
   _cubeSpawner: {fileID: 80452688}
@@ -802,6 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f780a54216f1b49bb50269c407ef23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452689}
   _counterText: {fileID: 536648152}
   _displayFormat: '{0}'
   _bombSpawner: {fileID: 80452689}
@@ -1050,6 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e01690961948af428ee53c62cc49db6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452688}
   _counterText: {fileID: 555630700}
   _displayFormat: '{0}'
   _cubeSpawner: {fileID: 80452688}
@@ -1314,6 +1317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74195666ef46dcb429546bcea6eee612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452690}
   _counterText: {fileID: 1487622110}
   _displayFormat: '{0}'
   _bombPool: {fileID: 80452690}
@@ -1751,6 +1755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185cef829904af544ad86419b7690a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452691}
   _counterText: {fileID: 2051219032}
   _displayFormat: '{0}'
   _cubePool: {fileID: 80452691}
@@ -1805,6 +1810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c78817207dbdb4ea8eb1833a47c6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _target: {fileID: 80452689}
   _counterText: {fileID: 2070546150}
   _displayFormat: '{0}'
   _bombSpawner: {fileID: 80452689}

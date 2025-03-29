@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,15 +6,13 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
 {
     [SerializeField] private T _prefab;
     [SerializeField] private int _poolSize = 10;
+    [SerializeField] private CounterView _counterView;
 
     protected List<T> _allObjects = new List<T>();
 
-    public event Action ActiveCountChanged;
-
-
     private void Awake()
     {
-       OnAwake();
+        OnAwake();
     }
 
     protected virtual void OnAwake()
@@ -40,10 +37,11 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
             _allObjects.Add(obj);
         }
 
-        ActiveCountChanged?.Invoke();
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.gameObject.SetActive(true);
+
+        UpdateCounter();
         return obj;
     }
 
@@ -51,12 +49,20 @@ public abstract class ObjectPool<T> : MonoBehaviour, IObjectPool<T> where T : Pr
     {
         if (obj == null) return;
 
-        ActiveCountChanged?.Invoke();
         obj.gameObject.SetActive(false);
+        UpdateCounter();
     }
 
-    public float GetActiveObjectCount()
+    private float GetActiveObjectCount()
     {
         return _allObjects.Count(obj => obj.gameObject.activeSelf);
+    }
+
+    private void UpdateCounter()
+    {
+        if (_counterView != null)
+        {
+            _counterView.CounterUpdate(GetActiveObjectCount());
+        }
     }
 }

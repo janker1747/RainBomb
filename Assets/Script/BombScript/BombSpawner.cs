@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class BombSpawner : Spawner<Bomb>
 {
-    [SerializeField] private BombAllTime _bombAllTime;
-    [SerializeField] private BombCreated _bombCreated;
     [SerializeField] private BombPool _pool;
     [SerializeField] private Exploder _exploder;
-    private float _count;
+    [SerializeField] private CounterView _counterView;
+    [SerializeField] private CounterView _counterView2;
 
-    public event Action BombCountChanged;
-    public float GetCount => _count;
+    private float _count;
 
     private void Awake()
     {
@@ -24,6 +22,7 @@ public class BombSpawner : Spawner<Bomb>
         bomb.Activate();
         
         _count++;
-        BombCountChanged?.Invoke();
+        _counterView.CounterUpdate(_count);
+        _counterView2.CounterUpdate(_count);
     }
 }
